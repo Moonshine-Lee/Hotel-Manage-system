@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel_manage.Mapper.BillMapper">
+    <update id="update">
+        UPDATE bill
+        <set>
+            <if test="billType != null">
+                bill_type = #{billType},
+            </if>
+            <if test="orderId != 0">
+                order_id = #{orderId},
+            </if>
+            <if test="checkinId != 0">
+                checkin_id = #{checkinId},
+            </if>
+            <if test="success != null and success != 0">
+                success = #{success},
+            </if>
+            <if test="amount != 0">
+                amount = #{amount},
+            </if>
+            <if test="paymentMethod != null and paymentMethod != ''">
+                payment_method = #{paymentMethod},
+            </if>
+            <if test="paymentTime != null">
+                payment_time = #{paymentTime},
+            </if>
+            <if test="payingReference != null and payingReference != ''">
+                paying_reference = #{payingReference}
+            </if>
+        </set>
+        WHERE bill_id = #{billId}
+    </update>
+
+    <select id="list" resultType="com.example.hotel_manage.Pojo.Bill">
+        select * from bill
+            <where>
+                <if test="billType != null and billType != ''">bill_type=#{billType} </if>
+                <if test="roomId != null and roomId != ''">and room_id = #{roomId}</if>
+                <if test= "paymentDate != null">and #{paymentDate} = CONVERT(DATE, payment_time) </if>
+            </where>
+    </select>
+</mapper>

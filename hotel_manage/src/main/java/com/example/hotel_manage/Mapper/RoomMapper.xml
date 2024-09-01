@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel_manage.Mapper.RoomMapper">
+    <select id="getRoomSqlListByIds">
+        select * from `order`
+        where room_id in
+        <foreach collection="list" item="item" separator="," open="(" close=")"></foreach>
+    </select>
+    <select id="list" resultType="com.example.hotel_manage.Pojo.RoomSql">
+        select * from room
+        <where>
+            <if test="roomId !='' and roomId != null">room_id like concat('%',#{roomId},'%')</if>
+            <if test="roomType != null and roomType != ''" >and room_type like concat('%',#{roomType},'%')</if>
+            <if test="roomStatus !=null and roomStatus !=''">and room_status like concat('%',#{roomStatus},'%')</if>
+        </where>
+    </select>
+
+
+</mapper>

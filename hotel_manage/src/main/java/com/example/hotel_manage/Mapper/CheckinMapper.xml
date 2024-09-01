@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel_manage.Mapper.CheckinMapper">
+    <select id="list" resultType="com.example.hotel_manage.Pojo.Checkin">
+        select * from check_in
+        <where>
+            <if test="roomId != null and roomId != '' ">room_id like concat('%',#{roomId},'%')</if>
+            <if test=" customerPhone != null and customerPhone !='' ">and customer_phone like concat('%',#{customerPhone},'%')</if>
+            <if test="date != null">and date between check_in_time and date_add(check_in_time,days)</if>
+            <if test="true">and check_in_status='check_in'</if>
+        </where>
+
+    </select>
+</mapper>

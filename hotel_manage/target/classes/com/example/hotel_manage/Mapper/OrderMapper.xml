@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel_manage.Mapper.OrderMapper">
+    <update id="update" parameterType="com.example.hotel_manage.Pojo.Order">
+        UPDATE `order`
+        <set>
+            <if test="orderType != null and orderType != ''">
+                order_type = #{orderType},
+            </if>
+            <if test="money != null">
+                money = #{money},
+            </if>
+            <if test="roomId != null and roomId != ''">
+                room_id = #{roomId},
+            </if>
+            <if test="paymentReference != null and paymentReference != ''">
+                payment_id = #{paymentReference},
+            </if>
+            <if test="orderDate != null">
+                order_date = #{orderDate},
+            </if>
+            <if test="orderDays != null">
+                order_days = #{orderDays}
+            </if>
+            <if test="1 = 1"> update_time=NOW()</if>
+        </set>
+        WHERE order_id = #{orderId}
+    </update>
+    <select id="list" resultType="com.example.hotel_manage.Pojo.Order">
+        select * from `order`
+        <where>
+            <if test="roomId !=null and roomId !=''">room_id = #{roomId}</if>
+            <if test="orderType !=null and orderType !=''">and order_type = #{orderType}</if>
+            <if test="phoneNumber !=null and phoneNumber !=''">and phone_number = #{phoneNumber}</if>
+            <if test="orderDate !=null">and order_date = #{orderDate}</if>
+        </where>
+    </select>
+</mapper>
